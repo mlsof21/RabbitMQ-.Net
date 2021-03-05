@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using publisher_api.Services;
 
 namespace publisher_api
 {
@@ -34,6 +35,9 @@ namespace publisher_api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "publisher_api", Version = "v1" });
             });
+
+
+            services.AddSingleton<IMessageService, MessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
