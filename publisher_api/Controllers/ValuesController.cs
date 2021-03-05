@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using publisher_api.Services;
+using System;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,6 +11,13 @@ namespace publisher_api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly IMessageService _messageService;
+
+        public ValuesController(IMessageService messageService)
+        {
+            _messageService = messageService;
+        }
+
         // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -25,9 +34,10 @@ namespace publisher_api.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
+        public void Post([FromBody] string value)
         {
-            return Ok("{\"success\": \"true\"}");
+            Console.WriteLine($"received a Post: {value}");
+            _messageService.Enqueue(value);
         }
 
         // PUT api/<ValuesController>/5
